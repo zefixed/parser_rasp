@@ -8,11 +8,32 @@ config.read("settings.ini")
 group = config["settings"]["group"]
 url = f"https://rasp.dmami.ru/json/?{group}"
 
+
+def rename(dct):
+    
+
+
+def trash_from_json(jsn):
+    for day in jsn.values():
+        for pairs in day.values():
+            for pair in pairs:
+                # deleting trash from json
+                pair.pop("dts")
+                pair.pop("auditories")
+                pair.pop("week")
+                pair.pop("align")
+                pair.pop("e_link")
+
+                # rename the elements
+
+    return jsn
+
+
 with sync_playwright() as p:
     def handle_response(response):
         if "/group?" in response.url:
-            with open(config["settings"]["dest_file"], 'w', encoding='utf-8') as f:
-                json.dump(response.json(), f, ensure_ascii=False)
+            with open(config["settings"]["dest_file"] + ".json", 'w', encoding='utf-8') as f:
+                json.dump(trash_from_json(response.json()["grid"]), f, ensure_ascii=False)
 
     browser = p.chromium.launch()
     page = browser.new_page()
