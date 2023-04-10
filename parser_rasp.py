@@ -1,12 +1,17 @@
 import json
 from playwright.sync_api import sync_playwright
+import configparser
 
-url = "https://rasp.dmami.ru/json/?221-352"
+config = configparser.ConfigParser()
+config.read("settings.ini")
+
+group = config["settings"]["group"]
+url = f"https://rasp.dmami.ru/json/?{group}"
 
 with sync_playwright() as p:
     def handle_response(response):
         if "/group?" in response.url:
-            with open('data.json', 'w', encoding='utf-8') as f:
+            with open(config["settings"]["dest_file"], 'w', encoding='utf-8') as f:
                 json.dump(response.json(), f, ensure_ascii=False)
 
     browser = p.chromium.launch()
