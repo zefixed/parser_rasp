@@ -3,14 +3,14 @@ from playwright.sync_api import sync_playwright
 import configparser
 
 config = configparser.ConfigParser()
-config.read("settings.ini")
+config.read("settings_parser.ini")
 
 group = config["settings"]["group"]
 url = f"https://rasp.dmami.ru/json/?{group}"
 
 
 def rename(dct):
-    
+   pass
 
 
 def trash_from_json(jsn):
