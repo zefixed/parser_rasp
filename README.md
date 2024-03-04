@@ -1,2 +1,2 @@
-Запускать parser_rasp.py
-Зависимости в requirements.txt
+# Запускать parser_rasp.py<br />
+# Зависимости в requirements.txt
