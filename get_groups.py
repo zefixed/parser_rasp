@@ -23,7 +23,11 @@ def get_groups():
 
         # Преобразуем JSON-данные в словарь
         data = json.loads(json_data)
-
+        
+        # Запись в файл
+        with open("groups.json", "w", encoding='utf-8') as f:
+            json.dump(data, f, ensure_ascii=False)
+            
         # Получаем список значений групп
         group_values = list(data['groups'].keys())
 
@@ -33,23 +37,24 @@ def get_groups():
         return ""
 
 
+if __name__ == "__main__":
+    get_groups()
 
+# import psycopg2
 
-import psycopg2
+# # Подключение к базе данных
+# conn = psycopg2.connect(
+#     host="localhost",
+#     port="5432",
+#     database="raspyxxx",
+#     user="postgres",
+#     password="root"
+# )
 
-# Подключение к базе данных
-conn = psycopg2.connect(
-    host="localhost",
-    port="5432",
-    database="raspyxxx",
-    user="postgres",
-    password="root"
-)
+# # Создание курсора
+# cur = conn.cursor()
 
-# Создание курсора
-cur = conn.cursor()
-
-# Выполнение SQL-запроса
-for group in get_groups():
-    cur.execute(f"INSERT INTO groups (id, \"group\") VALUES (DEFAULT, '{group}')")
-conn.commit()
+# # Выполнение SQL-запроса
+# for group in get_groups():
+#     cur.execute(f"INSERT INTO groups (id, \"group\") VALUES (DEFAULT, '{group}')")
+# conn.commit()
